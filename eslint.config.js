@@ -1,8 +1,10 @@
+
 // eslint.config.js (ESLint flat config)
 import js from '@eslint/js'
 import unicorn from 'eslint-plugin-unicorn'
 import globals from 'globals'
-
+import react from 'eslint-plugin-react'       // <-- add
+// THis fule will expect all the file names as in camelCase and unused code should be removed 
 export default [
   // Ignore non-source stuff
   {
@@ -28,14 +30,18 @@ export default [
   // Enforce camelCase file names
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
-    _languageOptions: {                     // <-- add
+    languageOptions: {                     // <-- add
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: { ...globals.browser },
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
-    plugins: { unicorn },
+    plugins: { unicorn, react },
+    settings: {
+      react: { version: 'detect' },         // good hygiene, autodetect React
+    },
     rules: {
+      'react/jsx-uses-vars': 'error',       // <-- key line
       // STRICT: only camelCase (e.g., formatDate.js). `Home.jsx` and `TEST.jsx` will both FAIL.
       'unicorn/filename-case': ['error', { cases: { camelCase: true } }],
     },

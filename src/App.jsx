@@ -1,8 +1,8 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from './home'
 import About from './about'
-import './App.css'
-import Test from './TEST'
+import './app.css'
+import Test from './test'
 
 export default function App() {
   return (
