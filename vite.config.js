@@ -6,6 +6,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     // setupFiles: './src/test/setup.ts', // optional
-    globals: true
+    globals: true,
+    base:'/CI-CD-test/'
   }
 })
