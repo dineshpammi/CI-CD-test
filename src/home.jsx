@@ -1,7 +1,7 @@
 import { useState } from 'react'
 function Home() {
     return (
-        <div>Home is wrkng</div>
+        <div>Home is wrkng- Updated</div>
     )
 }
 
