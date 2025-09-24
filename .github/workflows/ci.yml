@@ -31,10 +31,10 @@ jobs:
         run: npm ci
 
       # OPTIONAL: keep or remove—only if you have a filename or lint script
-      # - name: Lint
-      #   run: npm run lint
-      # - name: Check filenames (camelCase)
-      #   run: npm run check:filenames
+      - name: Lint
+        run: npm run lint
+      - name: Check filenames (camelCase)
+        run: npm run check:filenames
 
       - name: Build (Vite)
         run: npm run build

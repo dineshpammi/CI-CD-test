@@ -1,29 +1,47 @@
+// eslint.config.js (ESLint flat config)
 import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import unicorn from 'eslint-plugin-unicorn'
 
-export default defineConfig([
-  globalIgnores(['dist']),
+export default [
+  // Ignore non-source stuff
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'coverage/**',
+      'public/**',
+      '.github/**',
+      'README.md',
+      'LICENSE',
+      'index.html',
+      'vite.config.*',
+      'postcss.config.*',
+      'tailwind.config.*',
+      'eslint.*',
     ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
-    },
+  },
+
+  // Base JS rules
+  js.configs.recommended,
+
+  // Enforce camelCase file names
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: { unicorn },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // STRICT: only camelCase (e.g., formatDate.js). `Home.jsx` and `TEST.jsx` will both FAIL.
+      'unicorn/filename-case': ['error', { cases: { camelCase: true } }],
     },
   },
-])
+
+  // ── If you prefer allowing React component files in PascalCase (e.g., Home.jsx),
+  //     uncomment this block and remove the one above.
+  // {
+  //   files: ['**/*.{js,jsx,ts,tsx}'],
+  //   plugins: { unicorn },
+  //   rules: {
+  //     // camelCase for utils, PascalCase for components; `TEST.jsx` (ALL CAPS) still FAILS
+  //     'unicorn/filename-case': ['error', { cases: { camelCase: true, pascalCase: true } }],
+  //   },
+  // },
+]
