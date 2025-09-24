@@ -2,6 +2,7 @@ import { Routes, Route, Link } from 'react-router-dom'
 import Home from './home'
 import About from './about'
 import './App.css'
+import Test from './TEST'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/test" element={<Test />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </div>
