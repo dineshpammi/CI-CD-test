@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "master" ]
-  workflow_dispatch:
+    branches: [ "master" ]   # deploys when master updates
+  workflow_dispatch:          # allow manual runs from Actions tab
 
 permissions:
   contents: read
@@ -27,16 +27,30 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install
+      - name: Install deps
         run: npm ci
 
-      - name: Build
+      # OPTIONAL: keep or remove—only if you have a filename or lint script
+      # - name: Lint
+      #   run: npm run lint
+      # - name: Check filenames (camelCase)
+      #   run: npm run check:filenames
+
+      - name: Build (Vite)
         run: npm run build
+
+      # Important for GitHub Pages:
+      # 1) .nojekyll disables Jekyll processing
+      # 2) 404.html lets BrowserRouter refreshes work (safe to keep even if using HashRouter)
+      - name: Prepare Pages artifact
+        run: |
+          touch dist/.nojekyll
+          cp dist/index.html dist/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: dist
 
   deploy:
     environment:
