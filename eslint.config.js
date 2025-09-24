@@ -27,6 +27,12 @@ export default [
   // Enforce camelCase file names
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
+    _languageOptions: {                     // <-- add
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: { ...globals.browser },
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
     plugins: { unicorn },
     rules: {
       // STRICT: only camelCase (e.g., formatDate.js). `Home.jsx` and `TEST.jsx` will both FAIL.
