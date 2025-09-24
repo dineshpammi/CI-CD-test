@@ -1,6 +1,7 @@
 // eslint.config.js (ESLint flat config)
 import js from '@eslint/js'
 import unicorn from 'eslint-plugin-unicorn'
+import globals from 'globals'
 
 export default [
   // Ignore non-source stuff
